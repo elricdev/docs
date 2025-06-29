@@ -79,12 +79,12 @@
       "anchors": [
         {
           "anchor": "Discord Server",
-          "href": "#",
+          "href": "https://discord.gg/elricbot",
           "icon": "discord"
         },
         {
           "anchor": "GitHub",
-          "href": "#",
+          "href": "https://github.com/elricbot/elric-discord-bot",
           "icon": "github"
         },
         {
@@ -103,19 +103,19 @@
     "links": [
       {
         "label": "Invite Bot",
-        "href": "#"
+        "href": "https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&permissions=8&scope=bot"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "#"
+      "href": "https://dashboard.elricbot.com"
     }
   },
   "footer": {
     "socials": {
-      "github": "#",
-      "discord": "#"
+      "github": "https://github.com/elricbot/elric-discord-bot",
+      "discord": "https://discord.gg/elricbot"
     }
   }
 }
