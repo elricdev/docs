@@ -1,33 +1,59 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Elric Discord Bot API endpoints and external integrations'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Elric Discord Bot integrates with multiple external APIs to provide enhanced functionality. This section documents the bot's API integrations and available endpoints for custom implementations.
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="GitHub Integration"
+  icon="github"
+  href="/api-reference/external-apis#github"
 >
-  View the OpenAPI specification file
+  Repository information and user data
 </Card>
 
-## Authentication
+<Card
+  title="Cryptocurrency API"
+  icon="bitcoin"
+  href="/api-reference/external-apis#crypto"
+>
+  Real-time cryptocurrency prices and data
+</Card>
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+<Card
+  title="Anime/Manga API"
+  icon="play"
+  href="/api-reference/external-apis#anime"
+>
+  Anime and manga information lookup
+</Card>
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+## Bot Endpoints
+
+The bot provides several internal endpoints for dashboard and webhook integrations:
+
+### Authentication
+
+All API endpoints require authentication via Discord OAuth2 or bot token:
+
+```javascript
+// Bot token authentication
+headers: {
+  'Authorization': 'Bot YOUR_BOT_TOKEN'
+}
+
+// User authentication
+headers: {
+  'Authorization': 'Bearer OAUTH2_ACCESS_TOKEN'
+}
 ```
+
+### Rate Limiting
+
+API endpoints follow Discord's rate limiting guidelines:
+- Global rate limit: 50 requests per second
+- Per-route rate limits vary by endpoint
+- Rate limit headers included in responses

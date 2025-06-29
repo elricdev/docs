@@ -1,107 +1,130 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title: 'Self-Hosting & Development'
+description: 'Run Elric Discord Bot on your own server and contribute to development'
 ---
 
 <Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
+  **Prerequisites**: Node.js (version 18+), Discord Bot Token, and basic knowledge of Discord.js
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system:
+## Self-Hosting Setup
 
-**Step 1**: Install Mintlify:
+Follow these steps to run Elric on your own server:
+
+**Step 1**: Clone the repository:
 
 <CodeGroup>
 
-  ```bash npm
-  npm i -g mintlify
-  ```
-
-```bash yarn
-yarn global add mintlify
+```bash git
+git clone https://github.com/elricbot/elric-discord-bot.git
+cd elric-discord-bot
 ```
 
 </CodeGroup>
 
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
-
-```bash
-mintlify dev
-```
-
-A local preview of your documentation will be available at `http://localhost:3000`.
-
-### Custom Ports
-
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
-
-```bash
-mintlify dev --port 3333
-```
-
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
-
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
-
-## Mintlify Versions
-
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+**Step 2**: Install dependencies:
 
 <CodeGroup>
 
 ```bash npm
-npm i -g mintlify@latest
+npm install
 ```
 
 ```bash yarn
-yarn global upgrade mintlify
+yarn install
 ```
 
 </CodeGroup>
 
-## Validating Links
+**Step 3**: Configure environment variables:
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
+Create a `.env` file with your Discord bot token and other required settings:
 
-```bash
-mintlify broken-links
+```env
+DISCORD_TOKEN=your_bot_token_here
+DATABASE_URL=file:./database.db
+LAVALINK_HOST=localhost
+LAVALINK_PORT=2333
+LAVALINK_PASSWORD=youshallnotpass
 ```
 
-## Deployment
+**Step 4**: Set up the database:
 
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
+```bash
+npm run prisma:generate
+npm run prisma:migrate
+```
 
-If the deployment is successful, you should see the following:
+**Step 5**: Start the bot:
 
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
+```bash
+npm run start
+```
 
-## Code Formatting
+## Development Environment
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+For contributing to Elric's development:
+
+```bash
+npm run dev
+```
+
+This runs the bot in development mode with hot reloading and debug logging.
+
+### Database Management
+
+Elric uses Prisma with SQLite for data management:
+
+```bash
+# View database in Prisma Studio
+npm run prisma:studio
+
+# Reset database
+npm run prisma:reset
+
+# Generate Prisma client
+npm run prisma:generate
+```
+
+## Configuration Files
+
+Key configuration files you may need to modify:
+
+- `config/bot.config.js` - Bot settings and feature toggles
+- `config/commands.config.js` - Command permissions and cooldowns
+- `prisma/schema.prisma` - Database schema
+- `.env` - Environment variables
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `npm test`
+5. Submit a pull request
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
+  <Accordion title="Bot not responding to commands">
+    Check that:
+    - Bot has proper permissions in your server
+    - Bot token is valid in .env file
+    - Database connection is working
   </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
+  <Accordion title="Music commands not working">
+    Ensure Lavalink server is running and properly configured:
+    ```bash
+    java -jar Lavalink.jar
+    ```
+  </Accordion>
+
+  <Accordion title="Database errors">
+    Try resetting the database:
+    ```bash
+    npm run prisma:reset
+    npm run prisma:migrate
+    ```
   </Accordion>
 </AccordionGroup>
-
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
